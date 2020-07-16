@@ -23,19 +23,18 @@ public class AllocineRestClient
 	
 	private String partnerId;
 	private String secretKey;
-	private WebTarget wt;
+	private WebTarget webTarget;
 	
 	public AllocineRestClient(String partnerId, String secretKey)
 	{
 		this.partnerId = partnerId;
 		this.secretKey = secretKey;
-		
-		wt = ClientBuilder.newClient().register(JsonProcessingFeature.class).target(ENDPOINT);
+		webTarget = ClientBuilder.newClient().register(JsonProcessingFeature.class).target(ENDPOINT);
 	}
 
 	private JsonObject doGet(String method, BasicNameValuePair... params)
 	{
-		wt = wt.path(method);
+		WebTarget wt = webTarget.path(method);
 
 		List<BasicNameValuePair> paramsList = new ArrayList<>(Arrays.asList(params));
 		paramsList.add(new BasicNameValuePair("partner", partnerId));
@@ -64,11 +63,11 @@ public class AllocineRestClient
 	public JsonObject searchTheaters(String zip, int radius)
 	{
 		return doGet(
-				"showtimelist",
-				new BasicNameValuePair("zip", zip),
-				new BasicNameValuePair("radius", String.valueOf(radius)),
-				new BasicNameValuePair("profile", "medium")
-			);
+			"showtimelist",
+			new BasicNameValuePair("zip", zip),
+			new BasicNameValuePair("radius", String.valueOf(radius)),
+			new BasicNameValuePair("profile", "medium")
+		);
 	}
 	
 	// TODO more methods
