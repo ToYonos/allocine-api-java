@@ -52,9 +52,24 @@ public class AllocineRestClient
 		return wt.request(MediaType.APPLICATION_JSON_TYPE).get(JsonObject.class);
 	}
 	
-//	public static void main(String args[])
-//	{
-//		AllocineRestClient client = new AllocineRestClient("100ED1DA33EB", "1a1ed8c1bed24d60ae3472eed1da33eb");
-//		System.out.println(client.doGet("search", new BasicNameValuePair("q", "inception"), new BasicNameValuePair("filter", "movie")));
-//	}
+	public JsonObject searchMovies(String query)
+	{
+		return doGet(
+			"search",
+			new BasicNameValuePair("q", query),
+			new BasicNameValuePair("filter", "movie")
+		);
+	}
+	
+	public JsonObject searchTheaters(String zip, int radius)
+	{
+		return doGet(
+				"showtimelist",
+				new BasicNameValuePair("zip", zip),
+				new BasicNameValuePair("radius", String.valueOf(radius)),
+				new BasicNameValuePair("profile", "medium")
+			);
+	}
+	
+	// TODO more methods
 }
